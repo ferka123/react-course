@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #eee;
+  color: black;
+  &__current {
+    margin: 0;
+  }
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  & .active {
+    color: orange;
+  }
+}
