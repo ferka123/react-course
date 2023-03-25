@@ -1,0 +1,13 @@
+.person-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.form-input {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}

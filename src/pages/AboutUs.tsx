@@ -1,10 +1,14 @@
 import { Component } from 'react';
 
-export default class AboutUs extends Component<{ setCurrentPage: (name: string) => void }> {
+interface Props {
+  setCurrentPage: (name: string) => void;
+}
+
+export default class AboutUs extends Component<Props> {
   componentDidMount(): void {
     this.props.setCurrentPage('About Us');
   }
   render() {
-    return <div>AboutUs</div>;
+    return <div>About Us</div>;
   }
 }
