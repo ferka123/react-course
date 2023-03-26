@@ -1,25 +1,10 @@
 import { Component, RefObject, createRef } from 'react';
 import '../styles/form.scss';
+import { FormProps, FormState } from './types';
 import { validateDob, validateGender, validateLang, validateName } from './validate';
 
-// interface Props {
-//   setPerson: (name: string) => void;
-// }
-
-type Props = Record<string, never>;
-
-interface State {
-  gender: string;
-  isNameInvalid: boolean;
-  isDobInvalid: boolean;
-  isFileInvalid: boolean;
-  isLangInvalid: boolean;
-  isRulesInvalid: boolean;
-  isGenderInvalid: boolean;
-}
-
-export default class Form extends Component<Props, State> {
-  constructor(props: Props) {
+export default class Form extends Component<FormProps, FormState> {
+  constructor(props: FormProps) {
     super(props);
     this.state = this.getInitialState();
   }
@@ -30,7 +15,7 @@ export default class Form extends Component<Props, State> {
   langRef: RefObject<HTMLSelectElement> = createRef();
   rulesRef: RefObject<HTMLInputElement> = createRef();
 
-  getInitialState: () => State = () => {
+  getInitialState: () => FormState = () => {
     return {
       gender: '',
       isNameInvalid: false,
@@ -47,8 +32,7 @@ export default class Form extends Component<Props, State> {
   };
   handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(this.fileRef.current!.files);
-    const validation: Partial<State> = {
+    const validation: Partial<FormState> = {
       isNameInvalid: validateName(this.nameRef.current!.value),
       isDobInvalid: validateDob(this.dobRef.current!.value),
       isGenderInvalid: validateGender(this.state.gender),
@@ -62,8 +46,16 @@ export default class Form extends Component<Props, State> {
       this.setState((prev) => Object.assign(prev, validation));
       return;
     }
+    this.props.setPerson({
+      name: this.nameRef.current!.value,
+      dob: this.dobRef.current!.value,
+      gender: this.state.gender,
+      lang: this.langRef.current!.value,
+      image: URL.createObjectURL(this.fileRef.current!.files![0]),
+    });
     this.formRef.current!.reset();
     this.setState(this.getInitialState());
+    alert('Person Added');
   };
   render() {
     return (
@@ -82,18 +74,18 @@ export default class Form extends Component<Props, State> {
           <span>Date of birth:</span>
           <input type="date" ref={this.dobRef} />
           {this.state.isDobInvalid && (
-            <p className="form-error">Person must be at least 18 years old</p>
+            <p className="form-error">The age must be between 18 and 120 years old</p>
           )}
         </div>
         <div className="form-input">
           <span>Gender:</span>
           <label>
             Male:
-            <input name="gender" type="radio" value="male" onChange={this.handleChangeGender} />
+            <input name="gender" type="radio" value="Male" onChange={this.handleChangeGender} />
           </label>
           <label>
             Female:
-            <input name="gender" type="radio" value="female" onChange={this.handleChangeGender} />
+            <input name="gender" type="radio" value="Female" onChange={this.handleChangeGender} />
           </label>
           {this.state.isGenderInvalid && <p className="form-error">Please select a gender</p>}
         </div>
@@ -108,8 +100,8 @@ export default class Form extends Component<Props, State> {
             <option value="" disabled hidden>
               Choose your language
             </option>
-            <option value="en">English</option>
-            <option value="ru">Russian</option>
+            <option value="English">English</option>
+            <option value="Russian">Russian</option>
           </select>
           {this.state.isLangInvalid && <p className="form-error">You must select a language</p>}
         </div>

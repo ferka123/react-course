@@ -1,0 +1,23 @@
+.form-cards {
+  display: flex;
+  flex: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.form-card {
+  width: 250px;
+  border-radius: 10px;
+  background-color: #ccc;
+  color: black;
+  padding: 15px;
+  & > img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+.form-cards__title {
+  padding: 15px;
+}
