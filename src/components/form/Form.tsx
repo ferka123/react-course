@@ -65,16 +65,18 @@ export default class Form extends Component<FormProps, FormState> {
           <span>Name:</span>
           <input type="text" ref={this.nameRef} />
           {this.state.isNameInvalid && (
-            <p className="form-error">
+            <p className="form-error" role="alert">
               The name must be at least 3 characters long and start with an uppercased letter
             </p>
           )}
         </div>
         <div className="form-input">
           <span>Date of birth:</span>
-          <input type="date" ref={this.dobRef} />
+          <input type="date" ref={this.dobRef} title="Enter your DOB" />
           {this.state.isDobInvalid && (
-            <p className="form-error">The age must be between 18 and 120 years old</p>
+            <p className="form-error" role="alert">
+              The age must be between 18 and 120 years old
+            </p>
           )}
         </div>
         <div className="form-input">
@@ -87,12 +89,20 @@ export default class Form extends Component<FormProps, FormState> {
             Female:
             <input name="gender" type="radio" value="Female" onChange={this.handleChangeGender} />
           </label>
-          {this.state.isGenderInvalid && <p className="form-error">Please select a gender</p>}
+          {this.state.isGenderInvalid && (
+            <p className="form-error" role="alert">
+              Please select a gender
+            </p>
+          )}
         </div>
         <div className="form-input">
           <span>Photo:</span>
-          <input type="file" accept="image/*" ref={this.fileRef} />
-          {this.state.isFileInvalid && <p className="form-error">You must select a photo</p>}
+          <input type="file" accept="image/*" ref={this.fileRef} title="Select a photo" />
+          {this.state.isFileInvalid && (
+            <p className="form-error" role="alert">
+              You must select a photo
+            </p>
+          )}
         </div>
         <div className="form-input">
           <span>Language:</span>
@@ -103,13 +113,19 @@ export default class Form extends Component<FormProps, FormState> {
             <option value="English">English</option>
             <option value="Russian">Russian</option>
           </select>
-          {this.state.isLangInvalid && <p className="form-error">You must select a language</p>}
+          {this.state.isLangInvalid && (
+            <p className="form-error" role="alert">
+              You must select a language
+            </p>
+          )}
         </div>
         <label className="form-input">
           <span>Agree to rules:</span>
           <input type="checkbox" ref={this.rulesRef} required />
           {this.state.isRulesInvalid && (
-            <span className="form-error">You must agree to the rules</span>
+            <span className="form-error" role="alert">
+              You must agree to the rules
+            </span>
           )}
         </label>
         <button type="submit">Add a person</button>
