@@ -4,10 +4,17 @@
   gap: 15px;
   padding: 20px;
   align-items: flex-start;
+  width: 400px;
 }
 
 .form-input {
   display: flex;
-  gap: 10px;
-  width: 100%;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.form-error {
+    color: red;
+    margin: 0;
+    font-size: 0.8em;
 }
