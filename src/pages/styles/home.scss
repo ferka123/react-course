@@ -1,0 +1,15 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.search-form {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  input {
+    width: 200px;
+  }
+}
