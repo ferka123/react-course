@@ -6,16 +6,7 @@ export interface PersonCard {
   gender: string;
 }
 
-export interface FormProps {
-  setPerson: (person: PersonCard) => void;
-}
-
-export interface FormState {
-  gender: string;
-  isNameInvalid: boolean;
-  isDobInvalid: boolean;
-  isFileInvalid: boolean;
-  isLangInvalid: boolean;
-  isRulesInvalid: boolean;
-  isGenderInvalid: boolean;
+export interface FormData extends Omit<PersonCard, 'image'> {
+  rules: boolean;
+  image: FileList;
 }
