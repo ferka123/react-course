@@ -1,18 +1,25 @@
-import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './styles/header.scss';
 
-export default class Header extends Component<{ currentPage: string }> {
-  render() {
-    return (
-      <header className="header">
-        <nav className="nav">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/about">About Us</NavLink>
-          <NavLink to="/forms">Forms</NavLink>
-        </nav>
-        <h2 className="header__current">Current: {this.props.currentPage}</h2>
-      </header>
-    );
-  }
+interface NavLinks {
+  [key: string]: string | undefined;
+}
+
+export default function Header() {
+  const navLinks: NavLinks = { '/': 'Home', '/about': 'About Us', '/forms': 'Forms' };
+  const location = useLocation();
+  return (
+    <header className="header">
+      <nav className="nav">
+        {Object.entries(navLinks).map(([link, linkName], index) => {
+          return (
+            <NavLink key={index} to={link}>
+              {linkName}
+            </NavLink>
+          );
+        })}
+      </nav>
+      <h2 className="header__current">Current: {navLinks[location.pathname] ?? 'not found'}</h2>
+    </header>
+  );
 }

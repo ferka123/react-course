@@ -4,23 +4,16 @@ import Form from '../components/form/Form';
 import { PersonCard } from '../components/form/types';
 import './styles/forms.scss';
 
-interface Props {
-  setCurrentPage: (name: string) => void;
-}
-
 interface State {
   personCards: PersonCard[];
 }
 
-export default class Forms extends Component<Props, State> {
-  constructor(props: Props) {
+export default class Forms extends Component<Record<string, never>, State> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       personCards: [],
     };
-  }
-  componentDidMount(): void {
-    this.props.setCurrentPage('Forms');
   }
   setPerson = (person: PersonCard) =>
     this.setState({ personCards: [...this.state.personCards, person] });
