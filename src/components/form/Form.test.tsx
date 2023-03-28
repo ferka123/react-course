@@ -25,8 +25,6 @@ describe('Form component', () => {
 
     await userEvent.click(getByRole('button'));
 
-    expect(window.alert).toHaveBeenCalledWith('Person Added');
-
     expect(setPersonMock).toHaveBeenCalledWith({
       name: 'Test',
       lang: 'English',

@@ -4,9 +4,8 @@ import { data } from '../fakedata/fakedata';
 import './styles/home.scss';
 
 export default function Home() {
-  const searchValueRef = useRef<string>();
   const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') || '');
-  searchValueRef.current = searchValue;
+  const searchValueRef = useRef<string>(searchValue);
 
   useEffect(() => {
     return () => {
