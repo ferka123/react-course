@@ -4,12 +4,13 @@ import { data } from '../fakedata/fakedata';
 import './styles/home.scss';
 
 export default function Home() {
-  const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') ?? '');
   const searchValueRef = useRef<string>();
+  const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') || '');
+  searchValueRef.current = searchValue;
 
   useEffect(() => {
     return () => {
-      searchValueRef.current && localStorage.setItem('searchValue', searchValueRef.current);
+      localStorage.setItem('searchValue', searchValueRef.current || '');
     };
   }, []);
 
