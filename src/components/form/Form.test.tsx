@@ -1,4 +1,5 @@
-import { cleanup, render, fireEvent } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, vi } from 'vitest';
 import Form from './Form';
 
@@ -8,20 +9,21 @@ afterEach(() => {
 });
 
 describe('Form component', () => {
-  it('should set a valid person', () => {
+  it('should set a valid person', async () => {
     const setPersonMock = vi.fn();
     window.URL.createObjectURL = vi.fn((file: File) => file.name);
     window.alert = vi.fn();
     const { getByRole, getByTitle, getByLabelText } = render(<Form setPerson={setPersonMock} />);
-    fireEvent.change(getByRole('textbox'), { target: { value: 'Test' } });
-    fireEvent.click(getByLabelText(/Male/));
-    fireEvent.click(getByRole('checkbox'));
-    const file = new File(['contents'], 'test.png', { type: 'image/png' });
-    fireEvent.change(getByTitle('Select a photo'), { target: { files: [file] } });
-    fireEvent.change(getByTitle('Enter your DOB'), { target: { value: '1985-12-12' } });
-    fireEvent.select(getByRole('combobox'), { target: { value: 'English' } });
 
-    fireEvent.click(getByRole('button'));
+    await userEvent.type(getByRole('textbox'), 'Test');
+    await userEvent.click(getByLabelText(/Male/));
+    await userEvent.click(getByRole('checkbox'));
+    const file = new File(['contents'], 'test.png', { type: 'image/png' });
+    await userEvent.upload(getByTitle('Select a photo'), file);
+    await userEvent.type(getByTitle('Enter your DOB'), '1985-12-12');
+    await userEvent.selectOptions(getByRole('combobox'), 'English');
+
+    await userEvent.click(getByRole('button'));
 
     expect(window.alert).toHaveBeenCalledWith('Person Added');
 
@@ -34,11 +36,11 @@ describe('Form component', () => {
     });
   });
 
-  it('should show errors on ivalid input', () => {
+  it('should show errors on ivalid input', async () => {
     const setPersonMock = vi.fn();
     const { getAllByRole, getByRole } = render(<Form setPerson={setPersonMock} />);
 
-    fireEvent.click(getByRole('button'));
+    await userEvent.click(getByRole('button'));
 
     const errors = getAllByRole('alert');
 

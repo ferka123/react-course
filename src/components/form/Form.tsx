@@ -11,8 +11,6 @@ export default function Form({ setPerson }: { setPerson: (person: PersonCard) =>
     reset,
   } = useForm<FormData>();
 
-  document.createElement('input').files;
-
   const onSubmit = (data: FormData) => {
     setPerson({
       name: data.name,

@@ -10,18 +10,20 @@ afterEach(() => {
 describe('Home page', () => {
   it('search input should read from local storage', () => {
     localStorage.setItem('searchValue', 'testing');
-    render(<Home setCurrentPage={() => {}} />);
+    render(<Home />);
 
     expect(screen.getByDisplayValue('testing')).toBeInTheDocument();
   });
 
-  it('search input should read from local storage', async () => {
-    render(<Home setCurrentPage={() => {}} />);
+  it('search input should save on unmount', async () => {
+    const { unmount } = render(<Home />);
 
     const input = screen.getByDisplayValue('') as HTMLInputElement;
-    fireEvent.change(input, { target: { value: 'test' } });
+    fireEvent.change(input, { target: { value: 'unmount' } });
+    expect(input.value).toBe('unmount');
 
-    expect(input.value).toBe('test');
-    expect(localStorage.getItem('searchValue')).toBe('test');
+    expect(localStorage.getItem('searchValue')).toBeNull();
+    unmount();
+    expect(localStorage.getItem('searchValue')).toBe('unmount');
   });
 });
