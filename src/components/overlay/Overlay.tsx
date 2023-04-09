@@ -15,7 +15,9 @@ const Overlay = ({
   return (
     <div className={classes.overlay} onClick={handleClose}>
       <div className={classes.content}>
-        <span className={classes.close}>x</span>
+        <span className={classes.close} role={'button'}>
+          x
+        </span>
         {children}
       </div>
     </div>

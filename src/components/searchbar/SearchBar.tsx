@@ -10,6 +10,7 @@ const SearchBar = ({ query, setQuery }: { query: string; setQuery: (v: string) =
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setQuery(inputValue);
+    localStorage.setItem('searchValue', inputValue);
   };
 
   return (

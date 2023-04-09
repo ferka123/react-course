@@ -1,4 +1,5 @@
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach } from 'vitest';
 import Home from './Home';
 
@@ -15,15 +16,11 @@ describe('Home page', () => {
     expect(screen.getByDisplayValue('testing')).toBeInTheDocument();
   });
 
-  it('search input should save on unmount', async () => {
-    const { unmount } = render(<Home />);
+  it('search input should save on submit', async () => {
+    const { getByRole } = render(<Home />);
 
-    const input = screen.getByDisplayValue('') as HTMLInputElement;
-    fireEvent.change(input, { target: { value: 'unmount' } });
-    expect(input.value).toBe('unmount');
-
-    expect(localStorage.getItem('searchValue')).toBeNull();
-    unmount();
-    expect(localStorage.getItem('searchValue')).toBe('unmount');
+    await userEvent.type(getByRole('textbox'), 'test');
+    await userEvent.click(getByRole('button'));
+    expect(localStorage.getItem('searchValue')).toBe('test');
   });
 });

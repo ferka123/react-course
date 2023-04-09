@@ -26,7 +26,8 @@ const ExtendedCard = ({ id }: { id: number }) => {
   }, [id]);
 
   if (isLoading) return <Spinner />;
-  if (isError || !data || Object.keys(data).length === 0) return <div>Error...</div>;
+  if (isError) return <div role={'alert'}>Error...</div>;
+  if (!data || Object.keys(data).length === 0) return <div role={'alert'}>No such product...</div>;
   return (
     <div className={classes.card}>
       <span>Title: {data.title}</span>

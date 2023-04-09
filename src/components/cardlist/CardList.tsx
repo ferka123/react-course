@@ -26,7 +26,7 @@ const CardList = ({ query }: { query: string }) => {
     fetchData();
   }, [query]);
 
-  if (isError) return <div>Error</div>;
+  if (isError) return <div role={'alert'}>Error</div>;
   if (isLoading) return <Spinner color="#fff" className={classes.loader} />;
   if (!data.length) return <div>No products</div>;
   return (
