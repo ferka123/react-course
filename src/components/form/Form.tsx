@@ -1,10 +1,13 @@
 import Toast from '../Toast';
 import { useForm } from 'react-hook-form';
 import '../styles/form.scss';
-import { PersonCard, FormData } from './types';
+import { FormData } from '../../types/form';
 import { validateDob } from './validate';
+import { useAppDispatch } from '../../redux/store';
+import { setCard } from '../../redux/features/formSlice';
 
-export default function Form({ setPerson }: { setPerson: (person: PersonCard) => void }) {
+export default function Form() {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -13,13 +16,15 @@ export default function Form({ setPerson }: { setPerson: (person: PersonCard) =>
   } = useForm<FormData>({ reValidateMode: 'onSubmit' });
 
   const onSubmit = (data: FormData) => {
-    setPerson({
-      name: data.name,
-      dob: data.dob,
-      gender: data.gender,
-      lang: data.lang,
-      image: URL.createObjectURL(data.image[0]),
-    });
+    dispatch(
+      setCard({
+        name: data.name,
+        dob: data.dob,
+        gender: data.gender,
+        lang: data.lang,
+        image: URL.createObjectURL(data.image[0]),
+      })
+    );
     reset();
   };
   return (
