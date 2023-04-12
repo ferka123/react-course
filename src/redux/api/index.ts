@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Product } from '../../types/api';
 
-const BASE_URL = 'https://mock-server-api-hcqxe00fv-jik789.vercel.app';
+export const BASE_URL = 'https://mock-server-api-hcqxe00fv-jik789.vercel.app';
 
 export const api = createApi({
   reducerPath: 'api',
