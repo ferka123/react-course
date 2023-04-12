@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import { Product } from '../../api/types';
 import Spinner from '../loaders/Spinner';
 import classes from './cardList.module.scss';
+import { useAppSelector } from '../../redux/store';
 
-const CardList = ({ query }: { query: string }) => {
+const CardList = () => {
+  const searchQuery = useAppSelector((state) => state.searchState.searchQuery);
   const [data, setData] = useState<Product[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -15,7 +17,7 @@ const CardList = ({ query }: { query: string }) => {
       try {
         setIsError(false);
         setIsLoading(true);
-        setData(await getProducts(query));
+        setData(await getProducts(searchQuery));
       } catch {
         setIsError(true);
       } finally {
@@ -24,7 +26,7 @@ const CardList = ({ query }: { query: string }) => {
     };
 
     fetchData();
-  }, [query]);
+  }, [searchQuery]);
 
   if (isError) return <div role={'alert'}>Error</div>;
   if (isLoading) return <Spinner color="#fff" className={classes.loader} />;

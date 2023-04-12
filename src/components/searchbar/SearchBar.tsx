@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { setSearchQuery } from '../../redux/features/searchSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 
-const SearchBar = ({ query, setQuery }: { query: string; setQuery: (v: string) => void }) => {
-  const [inputValue, setInputValue] = useState<string>(query);
+const SearchBar = () => {
+  const searchQuery = useAppSelector((state) => state.searchState.searchQuery);
+  const dispatch = useAppDispatch();
+  const [inputValue, setInputValue] = useState<string>(searchQuery);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -9,8 +13,7 @@ const SearchBar = ({ query, setQuery }: { query: string; setQuery: (v: string) =
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setQuery(inputValue);
-    localStorage.setItem('searchValue', inputValue);
+    dispatch(setSearchQuery(inputValue));
   };
 
   return (
