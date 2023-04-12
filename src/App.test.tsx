@@ -1,5 +1,6 @@
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import { cleanup, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithStore } from './test/test-utils';
 import { afterEach } from 'vitest';
 import App from './App';
 
@@ -9,7 +10,11 @@ afterEach(() => {
 
 describe('App component', () => {
   it('should display current page', async () => {
-    render(<App />, { wrapper: BrowserRouter });
+    renderWithStore(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
 
     fireEvent.click(screen.getByText('About Us'));
 
