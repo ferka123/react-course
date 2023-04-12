@@ -1,5 +1,6 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { renderWithStore } from '../../test/test-utils';
 import { afterEach, vi } from 'vitest';
 import Form from './Form';
 
@@ -10,10 +11,9 @@ afterEach(() => {
 
 describe('Form component', () => {
   it('should set a valid person', async () => {
-    const setPersonMock = vi.fn();
     window.URL.createObjectURL = vi.fn((file: File) => file.name);
     window.alert = vi.fn();
-    const { getByRole, getByTitle, getByLabelText } = render(<Form setPerson={setPersonMock} />);
+    const { getByRole, getByTitle, getByLabelText, store } = renderWithStore(<Form />);
 
     await userEvent.type(getByRole('textbox'), 'Test');
     await userEvent.click(getByLabelText(/Male/));
@@ -25,18 +25,19 @@ describe('Form component', () => {
 
     await userEvent.click(getByRole('button'));
 
-    expect(setPersonMock).toHaveBeenCalledWith({
-      name: 'Test',
-      lang: 'English',
-      dob: '1985-12-12',
-      image: 'test.png',
-      gender: 'Male',
-    });
+    expect(store.getState().formState.cards).toEqual([
+      {
+        name: 'Test',
+        lang: 'English',
+        dob: '1985-12-12',
+        image: 'test.png',
+        gender: 'Male',
+      },
+    ]);
   });
 
   it('should show errors on ivalid input', async () => {
-    const setPersonMock = vi.fn();
-    const { getAllByRole, getByRole } = render(<Form setPerson={setPersonMock} />);
+    const { getAllByRole, getByRole } = renderWithStore(<Form />);
 
     await userEvent.click(getByRole('button'));
 
