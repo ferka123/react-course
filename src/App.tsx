@@ -5,7 +5,7 @@ import AboutUs from './pages/AboutUs';
 import Header from './components/Header';
 import Forms from './pages/Forms';
 
-export default function App() {
+const App = () => {
   return (
     <>
       <Header />
@@ -19,4 +19,6 @@ export default function App() {
       </main>
     </>
   );
-}
+};
+
+export default App;
